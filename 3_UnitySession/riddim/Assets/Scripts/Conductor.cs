@@ -73,4 +73,20 @@ public class Conductor : MonoBehaviour
             nextIndex++;
         }
     }
+
+    public void EarlyHit(){ 
+        Debug.Log("Early");
+    }
+    public void GreatHit(){ 
+        Debug.Log("Great");
+    }
+    public void PerfectHit(){ 
+        Debug.Log("Perfect");
+    }
+    public void LateHit(){ 
+        Debug.Log("Late");
+    }
+    public void MissHit(){ 
+        Debug.Log("Miss");
+    }
 }
