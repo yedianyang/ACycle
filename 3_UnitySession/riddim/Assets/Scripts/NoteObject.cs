@@ -48,11 +48,11 @@ public class NoteObject : MonoBehaviour
             // dist < 0f && dist >= -0.2f  ====== Late
             keyPressed = true;
             float distance = transform.position.y - goal.position.y;
-            if(distance >= 0.5f) 
+            if(distance >= 0.3f) 
             {
                 Conductor.instance.EarlyHit();
             } 
-            else if (distance < 0.5f && distance >= 0.1f)
+            else if (distance < 0.3f && distance >= 0.1f)
             {
                 Conductor.instance.GreatHit();
             }
