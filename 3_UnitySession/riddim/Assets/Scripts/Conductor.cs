@@ -72,21 +72,35 @@ public class Conductor : MonoBehaviour
             note.GetComponent<NoteObject>().SetBeat(notes[nextIndex]);
             nextIndex++;
         }
+
+        if(Input.GetMouseButton(0))
+        {
+            Debug.Log(songPositionInBeats);
+        }
     }
 
-    public void EarlyHit(){ 
+    public void EarlyHit() 
+    { 
         Debug.Log("Early");
     }
-    public void GreatHit(){ 
+    
+    public void GreatHit()
+    { 
         Debug.Log("Great");
     }
-    public void PerfectHit(){ 
+
+    public void PerfectHit()
+    { 
         Debug.Log("Perfect");
     }
-    public void LateHit(){ 
+
+    public void LateHit()
+    { 
         Debug.Log("Late");
     }
-    public void MissHit(){ 
+
+    public void MissNote()
+    { 
         Debug.Log("Miss");
     }
 }

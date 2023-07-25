@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class NoteObject : MonoBehaviour
 {
-    private float myBeat;
+    public float myBeat;
     private Transform start;
     private Transform goal;
-    private float pct = 0f;
+    public float distToHit;
+    public float normalizedUnclamped = 0f;
     private bool activated = false;
     public KeyCode keyToPress;
+    private bool keyPressed = false;
 
     void Start()
     {
@@ -29,16 +31,10 @@ public class NoteObject : MonoBehaviour
 
     void MoveNote()
     {
-        pct = (Conductor.instance.beatsShownInAdvance - (myBeat - Conductor.instance.songPositionInBeats)) / Conductor.instance.beatsShownInAdvance;
-        if(pct <= 1.0f) 
-        {
-            transform.position = Vector3.Lerp(start.position, goal.position, pct);
-        }
-        else if (gameObject != null)
-        {
-            Conductor.instance.MissHit();
-            Destroy(gameObject);
-        }
+        distToHit = (Conductor.instance.beatsShownInAdvance - (myBeat - Conductor.instance.songPositionInBeats));
+        normalizedUnclamped = InvLerp(0f, Conductor.instance.beatsShownInAdvance, distToHit);
+
+        transform.position = Vector3.LerpUnclamped(start.position, goal.position, normalizedUnclamped);
     }
 
     void HandleKeyPress()
@@ -50,7 +46,7 @@ public class NoteObject : MonoBehaviour
             // dist < 0.5f && dist >= 0.1f ====== Great
             // dist < 0.1f && dist >= 0f   ====== Perfect
             // dist < 0f && dist >= -0.2f  ====== Late
-
+            keyPressed = true;
             float distance = transform.position.y - goal.position.y;
             if(distance >= 0.5f) 
             {
@@ -60,15 +56,19 @@ public class NoteObject : MonoBehaviour
             {
                 Conductor.instance.GreatHit();
             }
-            else if (distance < 0.1f && distance >= 0f)
+            else if (distance < 0.1f && distance >= -0.1f)
             {
                 Conductor.instance.PerfectHit();
             }
-            else if (distance < 0f && distance >= -0.2f)
+            else if (distance < -0.1f && distance >= -0.5f)
             {
                 Conductor.instance.LateHit();
             }
             Destroy(gameObject);
+        }
+        else 
+        {
+            keyPressed = false;
         }
     }
 
@@ -78,10 +78,26 @@ public class NoteObject : MonoBehaviour
         gameObject.SetActive(true);
     }
 
-    private void OnTriggerEnter2D(Collider2D other) {
+    private void OnTriggerEnter2D(Collider2D other) 
+    {
         if(other.gameObject.CompareTag("Activator"))
         {
             activated = true;
         }
+    }
+
+    private void OnTriggerExit2D(Collider2D other) 
+    {
+        if(other.gameObject.CompareTag("Activator") && !keyPressed)
+        {
+            activated = false;
+            Conductor.instance.MissNote();
+            Destroy(gameObject);
+        }
+    }
+
+    float InvLerp(float a, float b, float v)
+    {
+        return (v - a) / (b - a);
     }
 }
