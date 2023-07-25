@@ -207,6 +207,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &333554949
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 333554950}
+  m_Layer: 0
+  m_Name: EffectTransform
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &333554950
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333554949}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 6, y: -2, z: -0.02814617}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &529585884
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,6 +387,12 @@ MonoBehaviour:
   notesContainer: {fileID: 1286281034}
   startTransform: {fileID: 1518618998}
   goalTransform: {fileID: 929487807}
+  effectTransform: {fileID: 333554950}
+  earlyEffect: {fileID: 7522030832353411186, guid: 90ea52e1b0bdf4b229fd48a9b7a14981, type: 3}
+  greatEffect: {fileID: 4654017098817917571, guid: a28158ecd3adc4f0681015c957590815, type: 3}
+  perfectEffect: {fileID: 6789112306427600815, guid: 44210e9e7017f4b2a9236513aa5ef02f, type: 3}
+  lateEffect: {fileID: 3562138834281695333, guid: e8255daf21aa34fc09ac20420009aa0f, type: 3}
+  missEffect: {fileID: 7255904725555493309, guid: 6ddf692137d8546159a5ce7aec63c1e0, type: 3}
 --- !u!1 &929487805
 GameObject:
   m_ObjectHideFlags: 0

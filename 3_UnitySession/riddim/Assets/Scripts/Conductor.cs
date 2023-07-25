@@ -35,6 +35,9 @@ public class Conductor : MonoBehaviour
     public Transform startTransform;
     public Transform goalTransform;
 
+    public Transform effectTransform;
+    public GameObject earlyEffect, greatEffect, perfectEffect, lateEffect, missEffect;
+
     void Awake()
     {
         if(instance != null && instance != this)
@@ -73,6 +76,7 @@ public class Conductor : MonoBehaviour
             nextIndex++;
         }
 
+        // DEBUG
         if(Input.GetMouseButton(0))
         {
             Debug.Log(songPositionInBeats);
@@ -82,25 +86,30 @@ public class Conductor : MonoBehaviour
     public void EarlyHit() 
     { 
         Debug.Log("Early");
+        Instantiate(earlyEffect, effectTransform);
     }
     
     public void GreatHit()
     { 
         Debug.Log("Great");
+        Instantiate(greatEffect, effectTransform);
     }
 
     public void PerfectHit()
     { 
         Debug.Log("Perfect");
+        Instantiate(perfectEffect, effectTransform);
     }
 
     public void LateHit()
     { 
         Debug.Log("Late");
+        Instantiate(lateEffect, effectTransform);
     }
 
     public void MissNote()
     { 
         Debug.Log("Miss");
+        Instantiate(missEffect, effectTransform);
     }
 }
