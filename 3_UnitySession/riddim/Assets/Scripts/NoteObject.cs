@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class NoteObject : MonoBehaviour
 {
-    public float myBeat;
-    private Transform start;
-    private Transform goal;
+    public float beatPosition {get; private set; }
+    public Transform start {get; private set; }
+    public Transform goal {get; private set; }
     public float distToHit;
     public float normalizedUnclamped = 0f;
     private bool activated = false;
-    public KeyCode keyToPress;
+
+    public KeyCode keyToPress {get; private set; }
     private bool keyPressed = false;
+
+    private string colliderTag;
 
     void Start()
     {
-        start = Conductor.instance.startTransform;
-        goal = Conductor.instance.goalTransform;
     }
 
     void Update()
@@ -31,7 +32,7 @@ public class NoteObject : MonoBehaviour
 
     void MoveNote()
     {
-        distToHit = (Conductor.instance.beatsShownInAdvance - (myBeat - Conductor.instance.songPositionInBeats));
+        distToHit = (Conductor.instance.beatsShownInAdvance - (beatPosition - Conductor.instance.songPositionInBeats));
         normalizedUnclamped = InvLerp(0f, Conductor.instance.beatsShownInAdvance, distToHit);
 
         transform.position = Vector3.LerpUnclamped(start.position, goal.position, normalizedUnclamped);
@@ -74,13 +75,29 @@ public class NoteObject : MonoBehaviour
 
     public void SetBeat(float beat)
     {
-        myBeat = beat;
+        beatPosition = beat;
         gameObject.SetActive(true);
+    }
+
+    public void SetDirection(KeyCode _keyCode, string _direction)
+    {
+        keyToPress = _keyCode;
+        colliderTag = "Activator_" + _direction;
+    }
+
+    public void SetStart(Transform transform)
+    {
+        start = transform;
+    }
+
+    public void SetGoal(Transform transform)
+    {
+        goal = transform;
     }
 
     private void OnTriggerEnter2D(Collider2D other) 
     {
-        if(other.gameObject.CompareTag("Activator"))
+        if(other.gameObject.CompareTag(colliderTag))
         {
             activated = true;
         }
@@ -88,8 +105,10 @@ public class NoteObject : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other) 
     {
-        if(other.gameObject.CompareTag("Activator") && !keyPressed)
+        if(other.gameObject.CompareTag(colliderTag) && !keyPressed)
         {
+            // Not sure why it's called twice sometimes
+            Debug.Log(other.gameObject.name + " " + beatPosition + " " + gameObject.name); 
             activated = false;
             Conductor.instance.MissNote();
             Destroy(gameObject);

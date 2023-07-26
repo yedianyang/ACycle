@@ -3,6 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+public class Note 
+{
+    public float beatPosition;
+    public int [] beatDirections;
+
+    public Note(float _beatPosition, int [] _beatDirections)
+    {
+        beatPosition = _beatPosition;
+        beatDirections = _beatDirections;
+    }
+}
+
+public enum NoteDirection
+{
+    Up,
+    Left,
+    Right,
+    Down
+}
+
 public class Conductor : MonoBehaviour
 {
     public static Conductor instance { get; private set; }
@@ -23,20 +43,17 @@ public class Conductor : MonoBehaviour
     AudioSource musicSource;
     float clipLength;
 
-    float [] notes;
+    Note [] notes;
     int nextIndex;
 
     [SerializeField]
-    GameObject notePrefab;
-
-    [SerializeField]
     GameObject notesContainer;
-    
-    public Transform startTransform;
-    public Transform goalTransform;
 
     public Transform effectTransform;
     public GameObject earlyEffect, greatEffect, perfectEffect, lateEffect, missEffect;
+
+    public GameObject upArrow, leftArrow, rightArrow, downArrow;
+    public Transform upGoalTransform, leftGoalTransform, rightGoalTransform, downGoalTransform;
 
     void Awake()
     {
@@ -57,10 +74,18 @@ public class Conductor : MonoBehaviour
         dspSongTime = (float)AudioSettings.dspTime;
         musicSource.Play();
         nextIndex = 0;
-        notes = new float[(int)Mathf.Floor(clipLength)];
+        notes = new Note[(int)Mathf.Floor(clipLength)];
+
+        // TODO replace this with ProcessBeatmap function
         for(int i = 0; i < Mathf.Floor(clipLength); i++)
         {
-            notes[i] = (float)i;
+            int randLength = (int) Mathf.Ceil(Random.Range(0f, 2f));
+            int [] directions = new int [randLength];
+            for(int j = 0; j < randLength; j++) {
+                directions[j] = (int) Mathf.Round(Random.Range(0f, 3f));
+            }
+
+            notes[i] = new Note((float)i, directions);
         }
     }
 
@@ -69,10 +94,52 @@ public class Conductor : MonoBehaviour
         songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
         songPositionInBeats = songPosition / secPerBeat;
         
-        if(nextIndex < notes.Length && notes[nextIndex] < (songPositionInBeats + beatsShownInAdvance))
+        if(nextIndex < notes.Length && notes[nextIndex].beatPosition < (songPositionInBeats + beatsShownInAdvance))
         {
-            GameObject note = Instantiate(notePrefab, notesContainer.transform);
-            note.GetComponent<NoteObject>().SetBeat(notes[nextIndex]);
+            for(int i = 0; i < notes[nextIndex].beatDirections.Length; i++)
+            {
+                int direction = notes[nextIndex].beatDirections[i];
+                KeyCode key = KeyCode.Space;
+                GameObject notePrefab = upArrow;
+                Transform goalTransform = upGoalTransform;
+                string directionString = "";
+                switch (direction)
+                {
+                    case 0:
+                        key = KeyCode.UpArrow;
+                        notePrefab = upArrow;
+                        goalTransform = upGoalTransform;
+                        directionString = "Up";
+                        break;
+                    
+                    case 1:
+                        key = KeyCode.LeftArrow;
+                        notePrefab = leftArrow;
+                        goalTransform = leftGoalTransform;
+                        directionString = "Left";
+                        break;
+
+                    case 2:
+                        key = KeyCode.RightArrow;
+                        notePrefab = rightArrow;
+                        goalTransform = rightGoalTransform;
+                        directionString = "Right";
+                        break;
+
+                    case 3:
+                        key = KeyCode.DownArrow;
+                        notePrefab = downArrow;
+                        goalTransform = downGoalTransform;
+                        directionString = "Down";
+                        break;
+                }
+                GameObject note = Instantiate(notePrefab, notesContainer.transform);
+                note.GetComponent<NoteObject>().SetBeat(notes[nextIndex].beatPosition);
+                note.GetComponent<NoteObject>().SetDirection(key, directionString);
+                note.GetComponent<NoteObject>().SetStart(notePrefab.transform);
+                note.GetComponent<NoteObject>().SetGoal(goalTransform);
+            }
+            
             nextIndex++;
         }
 
@@ -85,7 +152,7 @@ public class Conductor : MonoBehaviour
 
     public void EarlyHit() 
     { 
-        Debug.Log("Early");
+        Debug.Log("Early ");
         Instantiate(earlyEffect, effectTransform);
     }
     

@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Activator
+  - Activator_Right
+  - Activator_Up
+  - Activator_Left
+  - Activator_Down
   layers:
   - Default
   - TransparentFX
