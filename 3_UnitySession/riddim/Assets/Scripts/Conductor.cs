@@ -55,6 +55,12 @@ public class Conductor : MonoBehaviour
     public GameObject upArrow, leftArrow, rightArrow, downArrow;
     public Transform upGoalTransform, leftGoalTransform, rightGoalTransform, downGoalTransform;
 
+    public int maxHealth = 100;
+    private int currentHealth;
+    public HealthBar healthBar;
+
+    public int missNoteDamage = 2;
+
     void Awake()
     {
         if(instance != null && instance != this)
@@ -75,6 +81,9 @@ public class Conductor : MonoBehaviour
         musicSource.Play();
         nextIndex = 0;
         notes = new Note[(int)Mathf.Floor(clipLength)];
+
+        currentHealth = maxHealth;
+        healthBar.SetMaxHealth(maxHealth);
 
         // TODO replace this with ProcessBeatmap function
         for(int i = 0; i < Mathf.Floor(clipLength); i++)
@@ -98,8 +107,7 @@ public class Conductor : MonoBehaviour
         {
             for(int i = 0; i < notes[nextIndex].beatDirections.Length; i++)
             {
-                int directionIndex = notes[nextIndex].beatDirections[i];
-                NoteDirection beatDirection = (NoteDirection) directionIndex;
+                NoteDirection beatDirection = (NoteDirection) notes[nextIndex].beatDirections[i];
                 KeyCode key;
                 GameObject notePrefab;
                 Transform goalTransform;
@@ -135,7 +143,7 @@ public class Conductor : MonoBehaviour
                         goalTransform = downGoalTransform;
                         break;
                 }
-                
+
                 GameObject note = Instantiate(notePrefab, notesContainer.transform);
                 note.GetComponent<NoteObject>().SetBeatPosition(notes[nextIndex].beatPosition);
                 note.GetComponent<NoteObject>().SetBeatDirection(beatDirection, key);
@@ -175,5 +183,8 @@ public class Conductor : MonoBehaviour
     { 
         Debug.Log("Miss");
         Instantiate(missEffect, effectTransform);
+        
+        currentHealth -= missNoteDamage;
+        healthBar.SetHealth(currentHealth);
     }
 }
