@@ -5,6 +5,7 @@ using UnityEngine;
 public class NoteObject : MonoBehaviour
 {
     public float beatPosition {get; private set; }
+    public NoteDirection beatDirection  {get; private set; }
     public Transform start {get; private set; }
     public Transform goal {get; private set; }
     public float distToHit;
@@ -73,16 +74,17 @@ public class NoteObject : MonoBehaviour
         }
     }
 
-    public void SetBeat(float beat)
+    public void SetBeatPosition(float beat)
     {
         beatPosition = beat;
         gameObject.SetActive(true);
     }
 
-    public void SetDirection(KeyCode _keyCode, string _direction)
+    public void SetBeatDirection(NoteDirection direction, KeyCode _keyCode)
     {
+        beatDirection = direction;
+        colliderTag = "Activator_" + direction.ToString();
         keyToPress = _keyCode;
-        colliderTag = "Activator_" + _direction;
     }
 
     public void SetStart(Transform transform)

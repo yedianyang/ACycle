@@ -98,55 +98,52 @@ public class Conductor : MonoBehaviour
         {
             for(int i = 0; i < notes[nextIndex].beatDirections.Length; i++)
             {
-                int direction = notes[nextIndex].beatDirections[i];
-                KeyCode key = KeyCode.Space;
-                GameObject notePrefab = upArrow;
-                Transform goalTransform = upGoalTransform;
-                string directionString = "";
-                switch (direction)
+                int directionIndex = notes[nextIndex].beatDirections[i];
+                NoteDirection beatDirection = (NoteDirection) directionIndex;
+                KeyCode key;
+                GameObject notePrefab;
+                Transform goalTransform;
+                switch (beatDirection)
                 {
-                    case 0:
+                    case NoteDirection.Up:
                         key = KeyCode.UpArrow;
                         notePrefab = upArrow;
                         goalTransform = upGoalTransform;
-                        directionString = "Up";
                         break;
                     
-                    case 1:
+                    case NoteDirection.Left:
                         key = KeyCode.LeftArrow;
                         notePrefab = leftArrow;
                         goalTransform = leftGoalTransform;
-                        directionString = "Left";
                         break;
 
-                    case 2:
+                    case NoteDirection.Right:
                         key = KeyCode.RightArrow;
                         notePrefab = rightArrow;
                         goalTransform = rightGoalTransform;
-                        directionString = "Right";
                         break;
 
-                    case 3:
+                    case NoteDirection.Down:
                         key = KeyCode.DownArrow;
                         notePrefab = downArrow;
                         goalTransform = downGoalTransform;
-                        directionString = "Down";
+                        break;
+                    
+                    default:
+                        key = KeyCode.DownArrow;
+                        notePrefab = downArrow;
+                        goalTransform = downGoalTransform;
                         break;
                 }
+                
                 GameObject note = Instantiate(notePrefab, notesContainer.transform);
-                note.GetComponent<NoteObject>().SetBeat(notes[nextIndex].beatPosition);
-                note.GetComponent<NoteObject>().SetDirection(key, directionString);
+                note.GetComponent<NoteObject>().SetBeatPosition(notes[nextIndex].beatPosition);
+                note.GetComponent<NoteObject>().SetBeatDirection(beatDirection, key);
                 note.GetComponent<NoteObject>().SetStart(notePrefab.transform);
                 note.GetComponent<NoteObject>().SetGoal(goalTransform);
             }
             
             nextIndex++;
-        }
-
-        // DEBUG
-        if(Input.GetMouseButton(0))
-        {
-            Debug.Log(songPositionInBeats);
         }
     }
 
