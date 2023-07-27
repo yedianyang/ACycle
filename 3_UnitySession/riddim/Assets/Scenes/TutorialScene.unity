@@ -489,10 +489,14 @@ MonoBehaviour:
   perfectEffect: {fileID: 6789112306427600815, guid: 44210e9e7017f4b2a9236513aa5ef02f, type: 3}
   lateEffect: {fileID: 3562138834281695333, guid: e8255daf21aa34fc09ac20420009aa0f, type: 3}
   missEffect: {fileID: 7255904725555493309, guid: 6ddf692137d8546159a5ce7aec63c1e0, type: 3}
-  upArrow: {fileID: 3654435114949777810, guid: 03798ec8559514cc58cc21145dccab49, type: 3}
-  leftArrow: {fileID: 1502082363449739592, guid: 0b0f591ff9b2142c68d2b324fffd2525, type: 3}
-  rightArrow: {fileID: 2535375033409841725, guid: 2fa59ad9fa6c14d2eadea24c246e9439, type: 3}
-  downArrow: {fileID: 1304300613987868804, guid: 5896c685ce1af47e6878cdd40f2d57b9, type: 3}
+  upArrow: {fileID: 3654435114949777810, guid: 7828e9162dc9d402d947ff02345c8530, type: 3}
+  leftArrow: {fileID: 1502082363449739592, guid: d4c3cf39926b144769156716d58fa2d2, type: 3}
+  rightArrow: {fileID: 2535375033409841725, guid: 29808e383a9444d17955b49241ebb4cf, type: 3}
+  downArrow: {fileID: 1304300613987868804, guid: 52ae23f67b6d14f709de89a389610e0a, type: 3}
+  upStartTransform: {fileID: 3654435114949777811, guid: 7828e9162dc9d402d947ff02345c8530, type: 3}
+  leftStartTransform: {fileID: 1502082363449739593, guid: d4c3cf39926b144769156716d58fa2d2, type: 3}
+  rightStartTransform: {fileID: 2535375033409841724, guid: 29808e383a9444d17955b49241ebb4cf, type: 3}
+  downStartTransform: {fileID: 1304300613987868807, guid: 52ae23f67b6d14f709de89a389610e0a, type: 3}
   upGoalTransform: {fileID: 1416560436}
   leftGoalTransform: {fileID: 1282677357}
   rightGoalTransform: {fileID: 2106938744}

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class NoteObject : MonoBehaviour
 {
-    public float beatPosition {get; private set; }
+    [SerializeField]
+    public float beatPosition; 
     public NoteDirection beatDirection  {get; private set; }
     public Transform start {get; private set; }
     public Transform goal {get; private set; }
@@ -110,11 +111,19 @@ public class NoteObject : MonoBehaviour
         if(other.gameObject.CompareTag(colliderTag) && !keyPressed)
         {
             // Not sure why it's called twice sometimes
-            Debug.Log(other.gameObject.name + " " + beatPosition + " " + gameObject.name); 
-            activated = false;
-            Conductor.instance.MissNote();
-            Destroy(gameObject);
+            // Debug.Log(other.gameObject.name + " " + beatPosition + " " + gameObject.name); 
+            // activated = false;
+            // Conductor.instance.MissNote();
+            // Destroy(gameObject);
+            MissNote();
         }
+    }
+
+    private void MissNote()
+    {
+        activated = false;
+        Conductor.instance.MissNote();
+        Destroy(gameObject);
     }
 
     float InvLerp(float a, float b, float v)

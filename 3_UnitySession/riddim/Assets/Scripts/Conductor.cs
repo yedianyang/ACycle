@@ -53,6 +53,7 @@ public class Conductor : MonoBehaviour
     public GameObject earlyEffect, greatEffect, perfectEffect, lateEffect, missEffect;
 
     public GameObject upArrow, leftArrow, rightArrow, downArrow;
+    public Transform upStartTransform, leftStartTransform, rightStartTransform, downStartTransform;
     public Transform upGoalTransform, leftGoalTransform, rightGoalTransform, downGoalTransform;
 
     public int maxHealth = 100;
@@ -89,6 +90,7 @@ public class Conductor : MonoBehaviour
         for(int i = 0; i < Mathf.Floor(clipLength); i++)
         {
             int randLength = (int) Mathf.Ceil(Random.Range(0f, 2f));
+            // int randLength = 1;
             int [] directions = new int [randLength];
             for(int j = 0; j < randLength; j++) {
                 directions[j] = (int) Mathf.Round(Random.Range(0f, 3f));
@@ -105,53 +107,62 @@ public class Conductor : MonoBehaviour
         
         if(nextIndex < notes.Length && notes[nextIndex].beatPosition < (songPositionInBeats + beatsShownInAdvance))
         {
-            for(int i = 0; i < notes[nextIndex].beatDirections.Length; i++)
-            {
-                NoteDirection beatDirection = (NoteDirection) notes[nextIndex].beatDirections[i];
-                KeyCode key;
-                GameObject notePrefab;
-                Transform goalTransform;
-                switch (beatDirection)
-                {
-                    case NoteDirection.Up:
-                        key = KeyCode.UpArrow;
-                        notePrefab = upArrow;
-                        goalTransform = upGoalTransform;
-                        break;
-                    
-                    case NoteDirection.Left:
-                        key = KeyCode.LeftArrow;
-                        notePrefab = leftArrow;
-                        goalTransform = leftGoalTransform;
-                        break;
-
-                    case NoteDirection.Right:
-                        key = KeyCode.RightArrow;
-                        notePrefab = rightArrow;
-                        goalTransform = rightGoalTransform;
-                        break;
-
-                    case NoteDirection.Down:
-                        key = KeyCode.DownArrow;
-                        notePrefab = downArrow;
-                        goalTransform = downGoalTransform;
-                        break;
-                    
-                    default:
-                        key = KeyCode.DownArrow;
-                        notePrefab = downArrow;
-                        goalTransform = downGoalTransform;
-                        break;
-                }
-
-                GameObject note = Instantiate(notePrefab, notesContainer.transform);
-                note.GetComponent<NoteObject>().SetBeatPosition(notes[nextIndex].beatPosition);
-                note.GetComponent<NoteObject>().SetBeatDirection(beatDirection, key);
-                note.GetComponent<NoteObject>().SetStart(notePrefab.transform);
-                note.GetComponent<NoteObject>().SetGoal(goalTransform);
-            }
-            
+            SpawnNotes();
             nextIndex++;
+        }
+    }
+
+    void SpawnNotes()
+    {
+        for(int i = 0; i < notes[nextIndex].beatDirections.Length; i++)
+        {
+            NoteDirection beatDirection = (NoteDirection) notes[nextIndex].beatDirections[i];
+            KeyCode key;
+            GameObject notePrefab;
+            Transform startTransform, goalTransform;
+            switch (beatDirection)
+            {
+                case NoteDirection.Up:
+                    key = KeyCode.UpArrow;
+                    notePrefab = upArrow;
+                    startTransform = upStartTransform;
+                    goalTransform = upGoalTransform;
+                    break;
+                
+                case NoteDirection.Left:
+                    key = KeyCode.LeftArrow;
+                    notePrefab = leftArrow;
+                    startTransform = leftStartTransform;
+                    goalTransform = leftGoalTransform;
+                    break;
+
+                case NoteDirection.Right:
+                    key = KeyCode.RightArrow;
+                    notePrefab = rightArrow;
+                    startTransform = rightStartTransform;
+                    goalTransform = rightGoalTransform;
+                    break;
+
+                case NoteDirection.Down:
+                    key = KeyCode.DownArrow;
+                    notePrefab = downArrow;
+                    startTransform = downStartTransform;
+                    goalTransform = downGoalTransform;
+                    break;
+                
+                default:
+                    key = KeyCode.DownArrow;
+                    notePrefab = downArrow;
+                    startTransform = downStartTransform;
+                    goalTransform = downGoalTransform;
+                    break;
+            }
+
+            GameObject note = Instantiate(notePrefab, notesContainer.transform);
+            note.GetComponent<NoteObject>().SetBeatPosition(notes[nextIndex].beatPosition);
+            note.GetComponent<NoteObject>().SetBeatDirection(beatDirection, key);
+            note.GetComponent<NoteObject>().SetStart(startTransform);
+            note.GetComponent<NoteObject>().SetGoal(goalTransform);
         }
     }
 
