@@ -4,9 +4,22 @@ using UnityEngine;
 
 public class CyclePlayer : MonoBehaviour
 {
+    public static CyclePlayer instance {private set; get;}
+
+    void Awake()
+    {
+        if(instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else {
+            instance = this;
+        }
+    }
+
     void Start()
     {
-        
+        transform.position = new Vector3(0f, CycleConductor.instance.radius, 0f);
     }
 
     void Update()

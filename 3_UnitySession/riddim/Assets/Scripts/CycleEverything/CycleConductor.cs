@@ -33,6 +33,9 @@ public class CycleConductor : MonoBehaviour
     
     public GameObject notePrefab;
 
+    public Transform effectTransform;
+    public GameObject earlyEffect, greatEffect, perfectEffect, lateEffect, missEffect;
+
     void Awake()
     {
         if(instance != null && instance != this)
@@ -76,5 +79,33 @@ public class CycleConductor : MonoBehaviour
     {
         GameObject cycleNote = Instantiate(notePrefab, notesContainer);
         cycleNote.GetComponent<CycleNoteObject>().SetBeatPosition(beatPosition);
+    }
+
+    public void EarlyHit() 
+    { 
+        Instantiate(earlyEffect, effectTransform);
+    }
+    
+    public void GreatHit()
+    { 
+        Instantiate(greatEffect, effectTransform);
+    }
+
+    public void PerfectHit()
+    { 
+        Instantiate(perfectEffect, effectTransform);
+    }
+
+    public void LateHit()
+    { 
+        Instantiate(lateEffect, effectTransform);
+    }
+
+    public void MissNote()
+    { 
+        Instantiate(missEffect, effectTransform);
+        
+        // currentHealth -= missNoteDamage;
+        // healthBar.SetHealth(currentHealth);
     }
 }

@@ -6,15 +6,21 @@ public class CycleNoteObject : MonoBehaviour
 {
     public float beatPosition;
     public bool activated;
-
-    void Start()
-    {
-        
-    }
+    public KeyCode keyInput;
+    private bool keyPressed = false;
 
     void Update()
     {
-        
+        if(activated)
+        {
+            float angle = Vector3.SignedAngle(
+                CyclePlayer.instance.transform.position, 
+                transform.position,
+                Vector3.forward
+            );
+            
+            HandleKeyPress(angle);
+        }
     }
 
     public void SetBeatPosition(float _beatPosition) 
@@ -28,18 +34,55 @@ public class CycleNoteObject : MonoBehaviour
         transform.position = new Vector2(
             CycleConductor.instance.radius * Mathf.Sin(beatPositionInBar * Mathf.PI * 2f),
             CycleConductor.instance.radius * Mathf.Cos(beatPositionInBar * Mathf.PI * 2f));
+    }
 
+    void HandleKeyPress(float angle)
+    {
+        if(Input.GetKeyDown(keyInput))
+        {
+            if(angle <= -8f)
+            {
+                CycleConductor.instance.EarlyHit();
+            }
+            else if (angle > -8f && angle <= -3f)
+            {
+                CycleConductor.instance.GreatHit();
+            }
+            else if (angle > -3f && angle <= 3f)
+            {
+                CycleConductor.instance.PerfectHit();
+            }
+            else if (angle > 3f)
+            {
+                CycleConductor.instance.LateHit();
+            }
+            keyPressed = true;
+            Destroy(gameObject);
+        }
+        else
+        {
+            keyPressed = false;
+        }
+    }
+
+    void MissNote()
+    {
+        activated = false;
+        CycleConductor.instance.MissNote();
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        // Debug.Log("Entering " + other.gameObject.name);
-        activated = true;
+        if(other.gameObject.CompareTag("Player"))
+        {
+            activated = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other) {
-        if(other.gameObject.CompareTag("Player") && activated)
+        if(other.gameObject.CompareTag("Player") && activated && !keyPressed)
         {
-            Destroy(gameObject);
+            MissNote();
         }
     }
 }

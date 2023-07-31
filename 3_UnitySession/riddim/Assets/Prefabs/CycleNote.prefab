@@ -126,3 +126,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   beatPosition: 0
   activated: 0
+  keyInput: 32
