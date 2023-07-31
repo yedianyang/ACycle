@@ -15,6 +15,8 @@ public class CycleConductor : MonoBehaviour
 
     [SerializeField, Range(0f, 8f)]
     public float beatsShownInAdvance;
+
+    public float radius = 4f;
     
     float secPerBeat;
     float songPosition;
@@ -27,7 +29,7 @@ public class CycleConductor : MonoBehaviour
     int nextIndex;
 
     [SerializeField]
-    GameObject notesContainer;
+    Transform notesContainer;
     
     public GameObject notePrefab;
 
@@ -65,13 +67,14 @@ public class CycleConductor : MonoBehaviour
         
         if(nextIndex < notes.Length && notes[nextIndex] < (songPositionInBeats + beatsShownInAdvance))
         {
-            SpawnCycleNotes();
+            SpawnCycleNotes(notes[nextIndex]);
             nextIndex++;
         }
     }
 
-    void SpawnCycleNotes()
+    void SpawnCycleNotes(float beatPosition)
     {
-        
+        GameObject cycleNote = Instantiate(notePrefab, notesContainer);
+        cycleNote.GetComponent<CycleNoteObject>().SetBeatPosition(beatPosition);
     }
 }
