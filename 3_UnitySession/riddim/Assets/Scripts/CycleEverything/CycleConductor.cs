@@ -1,33 +1,33 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class CycleConductor : MonoBehaviour
 {
     public static CycleConductor instance { get; private set; }
 
-    [SerializeField]
-    float songBpm;
-    
-    [SerializeField]
-    float firstBeatOffset;
-
-    [SerializeField, Range(0f, 8f)]
-    public float beatsShownInAdvance;
-
     public float radius = 4f;
     
+    // Audio source things
+    [SerializeField]
+    float songBpm;
+    [SerializeField]
+    float firstBeatOffset;
+    [SerializeField, Range(0f, 8f)]
+    public float beatsShownInAdvance;
     float secPerBeat;
     float songPosition;
     public float songPositionInBeats;
     float dspSongTime;
     AudioSource musicSource;
     float clipLength;
-    bool gameStarted = false;
 
+    // Notes data structure
     float [] notes;
     int nextIndex;
+    bool gameStarted = false;
 
     // Notes in scene
     public Transform notesContainer;
@@ -38,10 +38,17 @@ public class CycleConductor : MonoBehaviour
     public GameObject earlyEffect, greatEffect, perfectEffect, lateEffect, missEffect;
 
     // Health and damage
+    int currentHealth;
     public int maxHealth = 100;
-    private int currentHealth;
     public HealthBar healthBar;
     public int missNoteDamage = 2;
+
+    // Score
+    int currentScore;
+    public int scorePerEarlyOrLateHit = 100;
+    public int scorePerGreatHit = 250;
+    public int scorePerPerfectHit = 500;
+    public TextMeshProUGUI scoreText;
 
     void Awake()
     {
@@ -94,6 +101,10 @@ public class CycleConductor : MonoBehaviour
         currentHealth = maxHealth;
         healthBar.SetMaxHealth(maxHealth);
         gameStarted = true;
+
+        // Init score
+        currentScore = 0;
+        scoreText.text = currentScore.ToString();
     }
 
     void SpawnCycleNotes(float beatPosition)
@@ -105,21 +116,43 @@ public class CycleConductor : MonoBehaviour
     public void EarlyHit() 
     { 
         Instantiate(earlyEffect, effectTransform);
+        
+        currentScore += scorePerEarlyOrLateHit;
+        NoteHit(0);
     }
     
     public void GreatHit()
     { 
         Instantiate(greatEffect, effectTransform);
+
+        currentScore += scorePerGreatHit;
+        NoteHit(2);
     }
 
     public void PerfectHit()
     { 
         Instantiate(perfectEffect, effectTransform);
+        
+        currentScore += scorePerPerfectHit;
+        NoteHit(5);
     }
 
     public void LateHit()
     { 
         Instantiate(lateEffect, effectTransform);
+
+        currentScore += scorePerEarlyOrLateHit;
+        NoteHit(0);
+    }
+
+    void NoteHit(int healPlayer)
+    {
+        scoreText.text = currentScore.ToString();
+        if(healPlayer > 0 && currentHealth < 100)
+        {
+            currentHealth += healPlayer;
+            healthBar.SetHealth(currentHealth);
+        }
     }
 
     public void MissNote()
