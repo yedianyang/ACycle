@@ -1627,6 +1627,7 @@ GameObject:
   - component: {fileID: 2003938578}
   - component: {fileID: 2003938575}
   - component: {fileID: 2003938579}
+  - component: {fileID: 2003938580}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1762,6 +1763,7 @@ MonoBehaviour:
   firstBeatOffset: 0.606
   beatsShownInAdvance: 3
   songPositionInBeats: 0
+  file: {fileID: 4900000, guid: 7418e510d102c4e3ea4790e834bcbbea, type: 3}
   notesContainer: {fileID: 651036450}
   notePrefab: {fileID: 3023745739558157380, guid: 465771834475e4880ab21924be444515, type: 3}
   effectTransform: {fileID: 941628481}
@@ -1777,3 +1779,16 @@ MonoBehaviour:
   scorePerGreatHit: 250
   scorePerPerfectHit: 500
   scoreText: {fileID: 107426806}
+--- !u!114 &2003938580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2003938574}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2b8847f8078a44009bf1374c42d63f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  file: {fileID: 4900000, guid: 7418e510d102c4e3ea4790e834bcbbea, type: 3}

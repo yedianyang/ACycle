@@ -25,7 +25,8 @@ public class CycleConductor : MonoBehaviour
     float clipLength;
 
     // Notes data structure
-    float [] notes;
+    public TextAsset file;
+    List<float> notes;
     int nextIndex;
     bool gameStarted = false;
 
@@ -75,7 +76,7 @@ public class CycleConductor : MonoBehaviour
             songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
             songPositionInBeats = songPosition / secPerBeat;
             
-            if(nextIndex < notes.Length && notes[nextIndex] < (songPositionInBeats + beatsShownInAdvance))
+            if(nextIndex < notes.Count && notes[nextIndex] < (songPositionInBeats + beatsShownInAdvance))
             {
                 SpawnCycleNotes(notes[nextIndex]);
                 nextIndex++;
@@ -91,11 +92,14 @@ public class CycleConductor : MonoBehaviour
 
         // Initializing notes data structure
         nextIndex = 0;
-        notes = new float[(int)Mathf.Floor(clipLength)];
-        for(int i = 0; i < Mathf.Floor(clipLength); i++)
-        {
-            notes[i] = (float) i;
-        }
+        ParseFile();
+        // notes = new float[(int)Mathf.Floor(clipLength)];
+        // float notePosition = 0f;
+        // for(int i = 0; i < Mathf.Floor(clipLength); i++)
+        // {
+        //     notes[i] = notePosition;
+        //     notePosition += 0.5f;
+        // }
 
         // Initializes player health
         currentHealth = maxHealth;
@@ -161,5 +165,28 @@ public class CycleConductor : MonoBehaviour
         
         currentHealth -= missNoteDamage;
         healthBar.SetHealth(currentHealth);
+    }
+
+    void ParseFile()
+    {
+        char[] splitLine = new char[] {','};
+        string[] lines = file.text.Split(splitLine, System.StringSplitOptions.RemoveEmptyEntries);
+
+        notes = new List<float>(lines.Length * 16);
+
+        for(int i = 0; i < lines.Length; i++)
+        {
+            string bar = lines[i];
+            for(int j = 0; j < bar.Length; j++)
+            {
+                char note = bar[j];
+                float barLength = (float)bar.Length;
+                if(note != '0')
+                {
+                    float pos = (float)j / 4f + (float) i * 4f;
+                    notes.Add(pos);
+                }
+            }
+        }
     }
 }

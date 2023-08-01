@@ -27,7 +27,7 @@ public class CycleNoteObject : MonoBehaviour
     {
         beatPosition = _beatPosition;
 
-        int barDivision = 4; // replace 4 with the conductor's beat division
+        int barDivision = 4; 
         int nthBar = (int) Mathf.Floor(beatPosition / barDivision);
         float beatPositionInBar = Mathf.InverseLerp(nthBar * barDivision, (nthBar + 1) * barDivision, beatPosition);
         
