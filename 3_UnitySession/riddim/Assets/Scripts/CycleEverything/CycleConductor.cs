@@ -4,6 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+public class Beat
+{
+    public float beatPosition;
+    public int beatType;
+
+    public Beat(float pos, int type)
+    {
+        beatPosition = pos;
+        beatType = type;
+    }
+}
+
 public class CycleConductor : MonoBehaviour
 {
     public static CycleConductor instance { get; private set; }
@@ -26,13 +38,14 @@ public class CycleConductor : MonoBehaviour
 
     // Notes data structure
     public TextAsset file;
-    List<float> notes;
+    List<Beat> beats;
     int nextIndex;
     bool gameStarted = false;
 
     // Notes in scene
     public Transform notesContainer;
-    public GameObject notePrefab;
+    public GameObject donPrefab;
+    public GameObject kaPrefab;
 
     // Effects
     public Transform effectTransform;
@@ -76,9 +89,9 @@ public class CycleConductor : MonoBehaviour
             songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
             songPositionInBeats = songPosition / secPerBeat;
             
-            if(nextIndex < notes.Count && notes[nextIndex] < (songPositionInBeats + beatsShownInAdvance))
+            if(nextIndex < beats.Count && beats[nextIndex].beatPosition < (songPositionInBeats + beatsShownInAdvance))
             {
-                SpawnCycleNotes(notes[nextIndex]);
+                SpawnCycleBeat(beats[nextIndex]);
                 nextIndex++;
             }
         }
@@ -93,13 +106,6 @@ public class CycleConductor : MonoBehaviour
         // Initializing notes data structure
         nextIndex = 0;
         ParseFile();
-        // notes = new float[(int)Mathf.Floor(clipLength)];
-        // float notePosition = 0f;
-        // for(int i = 0; i < Mathf.Floor(clipLength); i++)
-        // {
-        //     notes[i] = notePosition;
-        //     notePosition += 0.5f;
-        // }
 
         // Initializes player health
         currentHealth = maxHealth;
@@ -111,10 +117,31 @@ public class CycleConductor : MonoBehaviour
         scoreText.text = currentScore.ToString();
     }
 
-    void SpawnCycleNotes(float beatPosition)
+    void SpawnCycleBeat(Beat beat)
     {
-        GameObject cycleNote = Instantiate(notePrefab, notesContainer);
-        cycleNote.GetComponent<CycleNoteObject>().SetBeatPosition(beatPosition);
+        GameObject cycleBeat = null;
+        switch(beat.beatType)
+        {
+            case 1:
+                cycleBeat = Instantiate(donPrefab, notesContainer);
+                break;
+            
+            case 2:
+                cycleBeat = Instantiate(kaPrefab, notesContainer);
+                break;
+            
+            case 3:
+                cycleBeat = Instantiate(donPrefab, notesContainer);
+                break;
+            
+            case 4:
+                cycleBeat = Instantiate(kaPrefab, notesContainer);
+                break;
+        }
+        if(cycleBeat != null)
+        {
+            cycleBeat.GetComponent<CycleNoteObject>().SetBeatPosition(beat.beatPosition);
+        }
     }
 
     public void EarlyHit() 
@@ -172,7 +199,7 @@ public class CycleConductor : MonoBehaviour
         char[] splitLine = new char[] {','};
         string[] lines = file.text.Split(splitLine, System.StringSplitOptions.RemoveEmptyEntries);
 
-        notes = new List<float>(lines.Length * 16);
+        beats = new List<Beat>();
 
         for(int i = 0; i < lines.Length; i++)
         {
@@ -180,11 +207,11 @@ public class CycleConductor : MonoBehaviour
             for(int j = 0; j < bar.Length; j++)
             {
                 char note = bar[j];
-                float barLength = (float)bar.Length;
                 if(note != '0')
                 {
                     float pos = (float)j / 4f + (float) i * 4f;
-                    notes.Add(pos);
+                    Beat beat = new Beat(pos, note - '0');
+                    beats.Add(beat);
                 }
             }
         }
