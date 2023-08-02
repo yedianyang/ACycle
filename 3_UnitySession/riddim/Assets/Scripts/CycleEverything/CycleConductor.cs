@@ -86,7 +86,7 @@ public class CycleConductor : MonoBehaviour
     {
         if(gameStarted)
         {
-            songPosition = (float)(AudioSettings.dspTime - dspSongTime - firstBeatOffset);
+            songPosition = (float)(AudioSettings.dspTime - dspSongTime + firstBeatOffset);
             songPositionInBeats = songPosition / secPerBeat;
             
             if(nextIndex < beats.Count && beats[nextIndex].beatPosition < (songPositionInBeats + beatsShownInAdvance))
@@ -203,13 +203,15 @@ public class CycleConductor : MonoBehaviour
 
         for(int i = 0; i < lines.Length; i++)
         {
-            string bar = lines[i];
+            string bar = lines[i].Trim();
+            float tempoBase = (float) bar.Length / 4f;
+
             for(int j = 0; j < bar.Length; j++)
             {
                 char note = bar[j];
                 if(note != '0')
                 {
-                    float pos = (float)j / 4f + (float) i * 4f;
+                    float pos = (float)j / tempoBase + (float) i * 4f;
                     Beat beat = new Beat(pos, note - '0');
                     beats.Add(beat);
                 }
