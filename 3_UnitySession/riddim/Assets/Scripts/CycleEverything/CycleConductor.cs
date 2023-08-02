@@ -123,24 +123,18 @@ public class CycleConductor : MonoBehaviour
         switch(beat.beatType)
         {
             case 1:
-                cycleBeat = Instantiate(donPrefab, notesContainer);
-                break;
-            
-            case 2:
-                cycleBeat = Instantiate(kaPrefab, notesContainer);
-                break;
-            
             case 3:
                 cycleBeat = Instantiate(donPrefab, notesContainer);
                 break;
             
+            case 2:
             case 4:
                 cycleBeat = Instantiate(kaPrefab, notesContainer);
                 break;
         }
         if(cycleBeat != null)
         {
-            cycleBeat.GetComponent<CycleNoteObject>().SetBeatPosition(beat.beatPosition);
+            cycleBeat.GetComponent<SingleNoteObject>().SetBeatPosition(beat.beatPosition);
         }
     }
 

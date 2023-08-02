@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CycleNoteObject : MonoBehaviour
+public class SingleNoteObject : MonoBehaviour
 {
     public float beatPosition;
     public bool activated;

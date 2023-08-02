@@ -1729,7 +1729,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 2f585e34c78bb4eaf883fe8a09de6dd6, type: 3}
+  m_audioClip: {fileID: 8300000, guid: dee31db403822431f9996952fefa6e12, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -1843,11 +1843,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: 4
-  songBpm: 143
-  firstBeatOffset: -3.46
+  songBpm: 144
+  firstBeatOffset: -1.928
   beatsShownInAdvance: 3
   songPositionInBeats: 0
-  file: {fileID: 4900000, guid: 8d11c3dbf963f47b6ad6cf42cb11c3e8, type: 3}
+  file: {fileID: 4900000, guid: 69151dba4f31a409080d08401e8134be, type: 3}
   notesContainer: {fileID: 651036450}
   donPrefab: {fileID: 3023745739558157380, guid: 465771834475e4880ab21924be444515, type: 3}
   kaPrefab: {fileID: 3023745739558157380, guid: 4f2a0ce3fc1534d23bc16f5423c23a94, type: 3}
