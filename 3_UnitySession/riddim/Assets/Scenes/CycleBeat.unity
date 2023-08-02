@@ -1851,6 +1851,7 @@ MonoBehaviour:
   notesContainer: {fileID: 651036450}
   donPrefab: {fileID: 3023745739558157380, guid: 465771834475e4880ab21924be444515, type: 3}
   kaPrefab: {fileID: 3023745739558157380, guid: 4f2a0ce3fc1534d23bc16f5423c23a94, type: 3}
+  drumrollPrefab: {fileID: 2630727371437861114, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
   effectTransform: {fileID: 941628481}
   earlyEffect: {fileID: 7522030832353411186, guid: 90ea52e1b0bdf4b229fd48a9b7a14981, type: 3}
   greatEffect: {fileID: 4654017098817917571, guid: a28158ecd3adc4f0681015c957590815, type: 3}
@@ -1877,3 +1878,64 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   file: {fileID: 4900000, guid: 7418e510d102c4e3ea4790e834bcbbea, type: 3}
+--- !u!1001 &2630727371146519863
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_RootOrder
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861094, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861114, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_Name
+      value: Drumroll
+      objectReference: {fileID: 0}
+    - target: {fileID: 2630727371437861114, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0ce86d714a4294693ad84c267fdf6f91, type: 3}

@@ -13,11 +13,7 @@ public class SingleNoteObject : MonoBehaviour
     {
         if(activated)
         {
-            float angle = Vector3.SignedAngle(
-                CyclePlayer.instance.transform.position, 
-                transform.position,
-                Vector3.forward
-            );
+            float angle = GetAngleBetweenVectors(CyclePlayer.instance.transform.position, transform.position);
             
             HandleKeyPress(angle);
         }
@@ -84,5 +80,10 @@ public class SingleNoteObject : MonoBehaviour
         {
             MissNote();
         }
+    }
+
+    float GetAngleBetweenVectors(Vector3 from, Vector3 to)
+    {
+        return Vector3.SignedAngle(from, to, Vector3.forward);
     }
 }

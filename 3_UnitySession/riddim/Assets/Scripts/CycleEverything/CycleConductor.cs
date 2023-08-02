@@ -7,11 +7,13 @@ using TMPro;
 public class Beat
 {
     public float beatPosition;
+    public float beatEndPosition;
     public int beatType;
 
-    public Beat(float pos, int type)
+    public Beat(float pos, int type, float endPos = -1f)
     {
         beatPosition = pos;
+        beatEndPosition = endPos;
         beatType = type;
     }
 }
@@ -46,6 +48,7 @@ public class CycleConductor : MonoBehaviour
     public Transform notesContainer;
     public GameObject donPrefab;
     public GameObject kaPrefab;
+    public GameObject drumrollPrefab;
 
     // Effects
     public Transform effectTransform;
@@ -131,10 +134,23 @@ public class CycleConductor : MonoBehaviour
             case 4:
                 cycleBeat = Instantiate(kaPrefab, notesContainer);
                 break;
+            
+            case 5:
+            case 6:
+            case 7:
+                cycleBeat = Instantiate(drumrollPrefab, notesContainer);
+                break;
         }
         if(cycleBeat != null)
         {
-            cycleBeat.GetComponent<SingleNoteObject>().SetBeatPosition(beat.beatPosition);
+            if(beat.beatEndPosition == -1f)
+            {
+                cycleBeat.GetComponent<SingleNoteObject>().SetBeatPosition(beat.beatPosition);
+            }
+            else
+            {
+                cycleBeat.GetComponent<DrumrollNoteObject>().SetBeatPosition(beat.beatPosition, beat.beatEndPosition);
+            }
         }
     }
 
@@ -194,6 +210,7 @@ public class CycleConductor : MonoBehaviour
         string[] lines = file.text.Split(splitLine, System.StringSplitOptions.RemoveEmptyEntries);
 
         beats = new List<Beat>();
+        Beat tempDrumroll = null;
 
         for(int i = 0; i < lines.Length; i++)
         {
@@ -202,12 +219,26 @@ public class CycleConductor : MonoBehaviour
 
             for(int j = 0; j < bar.Length; j++)
             {
-                char note = bar[j];
-                if(note != '0')
+                int note = bar[j] - '0';
+                float pos = (float)j / tempoBase + (float) i * 4f;
+
+                if(note >= 1 && note <= 4)
                 {
-                    float pos = (float)j / tempoBase + (float) i * 4f;
-                    Beat beat = new Beat(pos, note - '0');
+                    Beat beat = new Beat(pos, note);
                     beats.Add(beat);
+                }
+                else if (note >= 5 && note <= 7)
+                {
+                    tempDrumroll = new Beat(pos, note);
+                }
+                else if (note == 8)
+                {
+                    if(tempDrumroll != null)
+                    {
+                        tempDrumroll.beatEndPosition = pos;
+                        beats.Add(tempDrumroll);
+                        tempDrumroll = null;
+                    }
                 }
             }
         }
