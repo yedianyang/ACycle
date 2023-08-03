@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class DrumrollNoteObject : MonoBehaviour
 {
-    public float beatPosition;
-    public float endBeatPosition;
+    public float drumrollStartPosition;
+    public float drumrollEndPosition;
     public bool activated;
     
     public LineRenderer line;
@@ -34,18 +34,18 @@ public class DrumrollNoteObject : MonoBehaviour
         }
 
         // Draw arc!
-        float startBeatPosition = activated ? CycleConductor.instance.songPositionInBeats : beatPosition;
+        float startBeatPosition = activated ? CycleConductor.instance.songPositionInBeats : drumrollStartPosition;
         float startBeatPositionInBar = HelperLibrary.GetBeatPositionInBar(startBeatPosition);
-        float end = Mathf.Min(CycleConductor.instance.songPositionInBeats + CycleConductor.instance.beatsShownInAdvance, endBeatPosition);
-        float angleDiffNormalized = (end - startBeatPosition) / (float)HelperLibrary.barDivision; // 0 - 1 
+        float endBeatPosition = Mathf.Min(CycleConductor.instance.songPositionInBeats + CycleConductor.instance.beatsShownInAdvance, drumrollEndPosition);
+        float angleDiffNormalized = (endBeatPosition - startBeatPosition) / (float)HelperLibrary.barDivision; // 0 - 1 
         DrawArc(startBeatPositionInBar * Mathf.PI * 2, angleDiffNormalized * Mathf.PI * 2f);
     }
 
-    public void SetBeatPosition(float _beatPosition, float _endPosition)
+    public void SetBeatPosition(float _drumrollStartPosition, float _endPosition)
     {
-        beatPosition = _beatPosition;
-        endBeatPosition = _endPosition;
-        transform.position = HelperLibrary.GetVectorFromBeatPosition(beatPosition);
+        drumrollStartPosition = _drumrollStartPosition;
+        drumrollEndPosition = _endPosition;
+        transform.position = HelperLibrary.GetVectorFromBeatPosition(drumrollStartPosition);
     }
 
     void HandleKeyPress()
