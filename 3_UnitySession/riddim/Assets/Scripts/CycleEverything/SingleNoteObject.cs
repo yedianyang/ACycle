@@ -13,7 +13,7 @@ public class SingleNoteObject : MonoBehaviour
     {
         if(activated)
         {
-            float angle = GetAngleBetweenVectors(CyclePlayer.instance.transform.position, transform.position);
+            float angle = HelperLibrary.GetAngleBetweenVectors(CyclePlayer.instance.transform.position, transform.position);
             
             HandleKeyPress(angle);
         }
@@ -23,13 +23,7 @@ public class SingleNoteObject : MonoBehaviour
     {
         beatPosition = _beatPosition;
 
-        int barDivision = 4; 
-        int nthBar = (int) Mathf.Floor(beatPosition / barDivision);
-        float beatPositionInBar = Mathf.InverseLerp(nthBar * barDivision, (nthBar + 1) * barDivision, beatPosition);
-        
-        transform.position = new Vector2(
-            CycleConductor.instance.radius * Mathf.Sin(beatPositionInBar * Mathf.PI * 2f),
-            CycleConductor.instance.radius * Mathf.Cos(beatPositionInBar * Mathf.PI * 2f));
+        transform.position = HelperLibrary.GetVectorFromBeatPosition(beatPosition);
     }
 
     void HandleKeyPress(float angle)
@@ -80,10 +74,5 @@ public class SingleNoteObject : MonoBehaviour
         {
             MissNote();
         }
-    }
-
-    float GetAngleBetweenVectors(Vector3 from, Vector3 to)
-    {
-        return Vector3.SignedAngle(from, to, Vector3.forward);
     }
 }

@@ -228,4 +228,5 @@ MonoBehaviour:
   endBeatPosition: 0
   activated: 0
   line: {fileID: 2630727371437861112}
+  sprite: {fileID: 2630727371437861095}
   lineSteps: 200

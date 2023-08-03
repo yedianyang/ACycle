@@ -24,7 +24,7 @@ public class CyclePlayer : MonoBehaviour
 
     void Update()
     {
-        // Move player by 90 degrees or PI / 2 every beat
+        // Move player by 90 degrees every beat
         transform.parent.transform.eulerAngles = new Vector3(0f, 0f, -CycleConductor.instance.songPositionInBeats * 90f);
     }
 }

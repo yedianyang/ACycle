@@ -9,6 +9,7 @@ public class DrumrollNoteObject : MonoBehaviour
     public bool activated;
     
     public LineRenderer line;
+    public SpriteRenderer sprite;
     public int lineSteps;
 
     private Vector3 lastPointInArc;
@@ -18,29 +19,33 @@ public class DrumrollNoteObject : MonoBehaviour
     {
         if(activated)
         {
+            // Hide drumroll starting icon
+            sprite.enabled = false;
+
+            // Handle drumroll key presses
             HandleKeyPress();
-            if(GetAngleBetweenVectors(lastPointInArc, CyclePlayer.instance.transform.position) < 0)
+            
+            // Destroy if it reaches the end of drumroll
+            if(Mathf.Abs(HelperLibrary.GetAngleBetweenVectors(CyclePlayer.instance.transform.position, lastPointInArc)) < 3f)
             {
                 activated = false;
                 Destroy(gameObject);
             }
         }
+
+        // Draw arc!
+        float startBeatPosition = activated ? CycleConductor.instance.songPositionInBeats : beatPosition;
+        float startBeatPositionInBar = HelperLibrary.GetBeatPositionInBar(startBeatPosition);
+        float end = Mathf.Min(CycleConductor.instance.songPositionInBeats + CycleConductor.instance.beatsShownInAdvance, endBeatPosition);
+        float angleDiffNormalized = (end - startBeatPosition) / (float)HelperLibrary.barDivision; // 0 - 1 
+        DrawArc(startBeatPositionInBar * Mathf.PI * 2, angleDiffNormalized * Mathf.PI * 2f);
     }
 
     public void SetBeatPosition(float _beatPosition, float _endPosition)
     {
         beatPosition = _beatPosition;
         endBeatPosition = _endPosition;
-        int barDivision = 4; 
-        int nthBar = (int) Mathf.Floor(beatPosition / barDivision);
-        float beatPositionInBar = Mathf.InverseLerp(nthBar * barDivision, (nthBar + 1) * barDivision, beatPosition); // 0 1 2 3
-        float angleDiffNormalized = (endBeatPosition - beatPosition) / (float)barDivision;
-
-        transform.position = new Vector2(
-            CycleConductor.instance.radius * Mathf.Sin(beatPositionInBar * Mathf.PI * 2f),
-            CycleConductor.instance.radius * Mathf.Cos(beatPositionInBar * Mathf.PI * 2f));
-            
-        DrawArc(beatPositionInBar * Mathf.PI * 2, angleDiffNormalized * Mathf.PI * 2f);
+        transform.position = HelperLibrary.GetVectorFromBeatPosition(beatPosition);
     }
 
     void HandleKeyPress()
@@ -64,31 +69,25 @@ public class DrumrollNoteObject : MonoBehaviour
             activated = true;
         }
     }
-    
+
     void DrawArc(float startAngle, float angleDiff)
     {
-        line.positionCount = lineSteps;
-
-        for(int i = 0; i < lineSteps; i++)
+        line.positionCount = lineSteps + 1;
+        float angleStep = angleDiff / (float)lineSteps;
+        float angle = startAngle;
+        for(int i = 0; i <= lineSteps; i++)
         {
-            float progress = (float)i / lineSteps;
-            float currRadian = Mathf.Lerp(startAngle, startAngle + angleDiff, progress);
             Vector3 currPos = new Vector3(
-                CycleConductor.instance.radius * Mathf.Sin(currRadian),
-                CycleConductor.instance.radius * Mathf.Cos(currRadian),
+                CycleConductor.instance.radius * Mathf.Sin(angle),
+                CycleConductor.instance.radius * Mathf.Cos(angle),
                 0f
             );
             line.SetPosition(i, currPos);
-
-            if(i == lineSteps-1)
+            if(i == lineSteps)
             {
                 lastPointInArc = currPos;
             }
+            angle += angleStep;
         }
-    }
-
-    float GetAngleBetweenVectors(Vector3 from, Vector3 to)
-    {
-        return Vector3.SignedAngle(from, to, Vector3.forward);
     }
 }
