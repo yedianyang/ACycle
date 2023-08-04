@@ -83,6 +83,7 @@ public class CycleConductor : MonoBehaviour
         musicSource = GetComponent<AudioSource>();
         clipLength = musicSource.clip.length;
         secPerBeat = 60f / songBpm;
+        StartNewGame();
     }
 
     void Update()
