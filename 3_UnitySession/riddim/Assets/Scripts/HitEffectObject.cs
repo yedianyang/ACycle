@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HitEffectObject : MonoBehaviour
 {
-    float lifetime = 0.2f;
+    float lifetime = 0.5f;
     
     void Start()
     {

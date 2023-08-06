@@ -52,7 +52,7 @@ public class DrumrollNoteObject : MonoBehaviour
     {
         if(Input.GetAxisRaw("Horizontal") != 0 && !keyPressed)
         {
-            CycleConductor.instance.GreatHit();
+            // CycleConductor.instance.GreatHit();
             keyPressed = true;
         }
         

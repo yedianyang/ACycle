@@ -29,21 +29,22 @@ public class SingleNoteObject : MonoBehaviour
     {
         if(Input.GetKeyDown(keyInput))
         {
+            Vector3 effectPos = new Vector3(transform.position.x - 1f, transform.position.y + 1f, 0f);
             if(angle <= -8f)
             {
-                CycleConductor.instance.EarlyHit();
+                CycleConductor.instance.EarlyHit(effectPos);
             }
             else if (angle > -8f && angle <= -3f)
             {
-                CycleConductor.instance.GreatHit();
+                CycleConductor.instance.GreatHit(effectPos);
             }
             else if (angle > -3f && angle <= 3f)
             {
-                CycleConductor.instance.PerfectHit();
+                CycleConductor.instance.PerfectHit(effectPos);
             }
             else if (angle > 3f)
             {
-                CycleConductor.instance.LateHit();
+                CycleConductor.instance.LateHit(effectPos);
             }
             keyPressed = true;
             Destroy(gameObject);
@@ -57,7 +58,7 @@ public class SingleNoteObject : MonoBehaviour
     void MissNote()
     {
         activated = false;
-        CycleConductor.instance.MissNote();
+        CycleConductor.instance.MissNote(new Vector3(transform.position.x - 1f, transform.position.y + 1f, 0f));
         Destroy(gameObject);
     }
 

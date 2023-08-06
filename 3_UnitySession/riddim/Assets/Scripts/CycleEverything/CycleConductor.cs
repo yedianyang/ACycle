@@ -160,35 +160,39 @@ public class CycleConductor : MonoBehaviour
         }
     }
 
-    public void EarlyHit() 
+    public void EarlyHit(Vector3 pos) 
     { 
-        Instantiate(earlyEffect, effectTransform);
+        Instantiate(earlyEffect, pos, Quaternion.identity);
         
         currentScore += scorePerEarlyOrLateHit;
+        Debug.Log("EARLY");
         NoteHit(0);
     }
     
-    public void GreatHit()
+    public void GreatHit(Vector3 pos)
     { 
-        Instantiate(greatEffect, effectTransform);
+        Instantiate(greatEffect, pos, Quaternion.identity);
 
         currentScore += scorePerGreatHit;
+        Debug.Log("GREAT");
         NoteHit(2);
     }
 
-    public void PerfectHit()
+    public void PerfectHit(Vector3 pos)
     { 
-        Instantiate(perfectEffect, effectTransform);
+        Instantiate(perfectEffect, pos, Quaternion.identity);
         
         currentScore += scorePerPerfectHit;
+        Debug.Log("Perfect");
         NoteHit(5);
     }
 
-    public void LateHit()
+    public void LateHit(Vector3 pos)
     { 
-        Instantiate(lateEffect, effectTransform);
+        Instantiate(lateEffect, pos, Quaternion.identity);
 
         currentScore += scorePerEarlyOrLateHit;
+        Debug.Log("Late");
         NoteHit(0);
     }
 
@@ -202,11 +206,12 @@ public class CycleConductor : MonoBehaviour
         }
     }
 
-    public void MissNote()
+    public void MissNote(Vector3 pos)
     { 
-        Instantiate(missEffect, effectTransform);
+        Instantiate(missEffect, pos, Quaternion.identity);
         
         currentHealth -= missNoteDamage;
+        Debug.Log("MISS");
         healthBar.SetHealth(currentHealth);
     }
 
