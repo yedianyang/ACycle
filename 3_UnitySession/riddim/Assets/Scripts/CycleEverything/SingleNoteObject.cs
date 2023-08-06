@@ -8,7 +8,6 @@ public class SingleNoteObject : MonoBehaviour
     public bool activated;
     public KeyCode keyInput;
     private bool keyPressed = false;
-
     void Update()
     {
         if(activated)

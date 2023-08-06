@@ -49,3 +49,6 @@ TagManager:
   - name: Lamp Occlude
     uniqueID: 3728059779
     locked: 0
+  - name: Beat
+    uniqueID: 4098950351
+    locked: 0

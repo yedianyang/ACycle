@@ -67,6 +67,9 @@ public class CycleConductor : MonoBehaviour
     public int scorePerPerfectHit = 500;
     public TextMeshProUGUI scoreText;
 
+    // Debug
+    public TextMeshProUGUI barNum;
+
     void Awake()
     {
         if(instance != null && instance != this)
@@ -92,6 +95,8 @@ public class CycleConductor : MonoBehaviour
         {
             songPosition = (float)(AudioSettings.dspTime - dspSongTime + firstBeatOffset);
             songPositionInBeats = songPosition / secPerBeat;
+
+            barNum.text = "Bar num: " + HelperLibrary.GetBarIndex(songPositionInBeats);
             
             if(nextIndex < beats.Count && beats[nextIndex].beatPosition < (songPositionInBeats + beatsShownInAdvance))
             {
