@@ -52,4 +52,14 @@ public static class HelperLibrary
             0f
         );
     }
+
+    public static float GetSongPositionInBeats(float songPositionInSeconds)
+    {
+        return songPositionInSeconds / CycleConductor.instance.secPerBeat;
+    }
+
+    public static float GetSongPositionInSeconds(float songPositionInBeats)
+    {
+        return songPositionInBeats * CycleConductor.instance.secPerBeat;
+    }
 }

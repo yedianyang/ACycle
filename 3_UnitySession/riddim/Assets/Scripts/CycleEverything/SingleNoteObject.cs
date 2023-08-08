@@ -8,6 +8,7 @@ public class SingleNoteObject : MonoBehaviour
     public bool activated;
     public KeyCode keyInput;
     private bool keyPressed = false;
+    public int missNoteDamage = 2;
     void Update()
     {
         if(activated)
@@ -58,7 +59,7 @@ public class SingleNoteObject : MonoBehaviour
     void MissNote()
     {
         activated = false;
-        CycleConductor.instance.MissNote(new Vector3(transform.position.x - 1f, transform.position.y + 1f, 0f));
+        CycleConductor.instance.MissNote(new Vector3(transform.position.x - 1f, transform.position.y + 1f, 0f), missNoteDamage);
         Destroy(gameObject);
     }
 

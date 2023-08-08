@@ -31,8 +31,8 @@ public class CycleConductor : MonoBehaviour
     float firstBeatOffset;
     [SerializeField, Range(0f, 8f)]
     public float beatsShownInAdvance;
-    float secPerBeat;
-    float songPosition;
+    public float secPerBeat;
+    public float songPosition;
     public float songPositionInBeats;
     float dspSongTime;
     AudioSource musicSource;
@@ -58,10 +58,10 @@ public class CycleConductor : MonoBehaviour
     int currentHealth;
     public int maxHealth = 100;
     public HealthBar healthBar;
-    public int missNoteDamage = 2;
 
     // Score
     int currentScore;
+    public int scorePerDrumrollHit = 10;
     public int scorePerEarlyOrLateHit = 100;
     public int scorePerGreatHit = 250;
     public int scorePerPerfectHit = 500;
@@ -196,6 +196,13 @@ public class CycleConductor : MonoBehaviour
         NoteHit(0);
     }
 
+    public void DrumrollHit()
+    {
+        currentScore += scorePerDrumrollHit;
+        NoteHit(0);
+        Debug.Log("drumroll hit");
+    }
+
     void NoteHit(int healPlayer)
     {
         scoreText.text = currentScore.ToString();
@@ -206,7 +213,7 @@ public class CycleConductor : MonoBehaviour
         }
     }
 
-    public void MissNote(Vector3 pos)
+    public void MissNote(Vector3 pos, int missNoteDamage)
     { 
         Instantiate(missEffect, pos, Quaternion.identity);
         

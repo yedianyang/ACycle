@@ -9,6 +9,7 @@ TagManager:
   - Activator_Up
   - Activator_Left
   - Activator_Down
+  - Drumroll
   layers:
   - Default
   - TransparentFX

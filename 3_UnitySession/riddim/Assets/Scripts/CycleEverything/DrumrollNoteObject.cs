@@ -13,7 +13,10 @@ public class DrumrollNoteObject : MonoBehaviour
     public int lineSteps;
 
     private Vector3 lastPointInArc;
-    private bool keyPressed;
+    public bool keyPressed;
+
+    bool drumrollHitOnce = false;
+    public int missDrumrollDamage = 10;
 
     void Update()
     {
@@ -29,6 +32,10 @@ public class DrumrollNoteObject : MonoBehaviour
             if(Mathf.Abs(HelperLibrary.GetAngleBetweenVectors(CyclePlayer.instance.transform.position, lastPointInArc)) < 3f)
             {
                 activated = false;
+                if(!drumrollHitOnce)
+                {
+                    CycleConductor.instance.MissNote(lastPointInArc, missDrumrollDamage);
+                }
                 Destroy(gameObject);
             }
         }
@@ -50,13 +57,13 @@ public class DrumrollNoteObject : MonoBehaviour
 
     void HandleKeyPress()
     {
-        if(Input.GetAxisRaw("Horizontal") != 0 && !keyPressed)
+        if(Input.GetAxisRaw("Horizontal") != 0)
         {
-            // CycleConductor.instance.GreatHit();
+            CycleConductor.instance.DrumrollHit();
+            if(!drumrollHitOnce) drumrollHitOnce = true;
             keyPressed = true;
         }
-        
-        if(Input.GetAxisRaw("Horizontal") == 0)
+        else
         {
             keyPressed = false;
         }
