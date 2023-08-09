@@ -53,3 +53,6 @@ TagManager:
   - name: Beat
     uniqueID: 4098950351
     locked: 0
+  - name: Character Occlude
+    uniqueID: 3066986051
+    locked: 0
