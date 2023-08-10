@@ -9,6 +9,8 @@ public class SingleNoteObject : MonoBehaviour
     public KeyCode keyInput;
     private bool keyPressed = false;
     public int missNoteDamage = 2;
+
+    public SpriteRenderer sprite, effect, shadow;
     void Update()
     {
         if(activated)
@@ -48,6 +50,9 @@ public class SingleNoteObject : MonoBehaviour
                 CycleConductor.instance.LateHit(effectPos);
             }
             keyPressed = true;
+            effect.enabled = true;
+            sprite.enabled = false;
+            shadow.enabled = false;
             Destroy(gameObject);
         }
         else

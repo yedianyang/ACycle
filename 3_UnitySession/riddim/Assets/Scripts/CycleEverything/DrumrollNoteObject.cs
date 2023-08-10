@@ -18,12 +18,15 @@ public class DrumrollNoteObject : MonoBehaviour
     bool drumrollHitOnce = false;
     public int missDrumrollDamage = 10;
 
+    public SpriteRenderer shadow;
+
     void Update()
     {
         if(activated)
         {
             // Hide drumroll starting icon
             sprite.enabled = false;
+            shadow.enabled = false;
 
             // Handle drumroll key presses
             HandleKeyPress();
