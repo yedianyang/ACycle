@@ -86,7 +86,7 @@ public class CyclePlayer : MonoBehaviour
             drumrollActivated = true;
             drumrollNoteObject = other.gameObject.GetComponent<DrumrollNoteObject>();
             drumrollEndPosition = drumrollNoteObject.drumrollEndPosition;
-            if(drumrollNoteObject.keyPressed)
+            if(Input.GetAxisRaw("Horizontal") != 0)
             {
                 drumrollStartSound.Play();
             }
