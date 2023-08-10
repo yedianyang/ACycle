@@ -12,6 +12,7 @@ public class DrumrollNoteObject : MonoBehaviour
     public SpriteRenderer sprite;
     public int lineSteps;
 
+    private Vector3 firstPointInArc;
     private Vector3 lastPointInArc;
     public bool keyPressed;
 
@@ -93,7 +94,12 @@ public class DrumrollNoteObject : MonoBehaviour
                 0f
             );
             line.SetPosition(i, currPos);
-            if(i == lineSteps)
+
+            if(i == 0)
+            {
+                firstPointInArc = currPos;
+            }
+            else if(i == lineSteps)
             {
                 lastPointInArc = currPos;
             }

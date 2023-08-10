@@ -21,7 +21,6 @@ public class Beat
 public class CycleConductor : MonoBehaviour
 {
     public static CycleConductor instance { get; private set; }
-
     
     // Audio source things
     [SerializeField]
@@ -161,62 +160,99 @@ public class CycleConductor : MonoBehaviour
         }
     }
 
-    public void EarlyHit(Vector3 pos) 
+    public void EarlyHit(Vector3 pos, ParticleSystem.MinMaxGradient gradient) 
     { 
-        Instantiate(earlyEffect, pos, Quaternion.identity);
+        Instantiate(earlyEffect, effectTransform);
         
         currentScore += scorePerEarlyOrLateHit;
         Debug.Log("EARLY");
-        NoteHit(0);
+        NoteHit(0, pos, gradient);
     }
     
-    public void GreatHit(Vector3 pos)
+    public void GreatHit(Vector3 pos, ParticleSystem.MinMaxGradient gradient)
     { 
-        Instantiate(greatEffect, pos, Quaternion.identity);
+        Instantiate(greatEffect, effectTransform);
 
         currentScore += scorePerGreatHit;
         Debug.Log("GREAT");
-        NoteHit(2);
+        NoteHit(2, pos, gradient);
     }
 
-    public void PerfectHit(Vector3 pos)
+    public void PerfectHit(Vector3 pos, ParticleSystem.MinMaxGradient gradient)
     { 
-        Instantiate(perfectEffect, pos, Quaternion.identity);
+        Instantiate(perfectEffect, effectTransform);
         
         currentScore += scorePerPerfectHit;
         Debug.Log("Perfect");
-        NoteHit(5);
+        NoteHit(5, pos, gradient);
     }
 
-    public void LateHit(Vector3 pos)
+    public void LateHit(Vector3 pos, ParticleSystem.MinMaxGradient gradient)
     { 
-        Instantiate(lateEffect, pos, Quaternion.identity);
+        Instantiate(lateEffect, effectTransform);
 
         currentScore += scorePerEarlyOrLateHit;
         Debug.Log("Late");
-        NoteHit(0);
+        NoteHit(0, pos, gradient);
     }
 
-    public void DrumrollHit()
-    {
-        currentScore += scorePerDrumrollHit;
-        NoteHit(0);
-        Debug.Log("drumroll hit");
-    }
-
-    void NoteHit(int healPlayer)
+    void NoteHit(int healPlayer, Vector3 pos, ParticleSystem.MinMaxGradient gradient)
     {
         scoreText.text = currentScore.ToString();
         if(healPlayer > 0 && currentHealth < 100)
         {
             currentHealth += healPlayer;
-            healthBar.SetHealth(currentHealth);
+            healthBar.SetHealth(currentHealth);            
         }
+        StartCoroutine(PlaySingleHitParticle(pos, gradient));
+    }
+
+    public void DrumrollHit()
+    {
+        currentScore += scorePerDrumrollHit;
+        scoreText.text = currentScore.ToString();
+        if(currentScore % 50 == 0)
+        {
+            StartCoroutine(PlayDrumrollParticle());
+        }
+    }
+
+    IEnumerator PlaySingleHitParticle(Vector3 pos, ParticleSystem.MinMaxGradient gradient)
+    {
+        GameObject particle = ParticlePool.SharedInstance.GetPooledParticle();
+        if(particle != null)
+        {
+            particle.transform.position = pos;
+            particle.SetActive(true);
+            ParticleSystem ps = particle.GetComponent<ParticleSystem>();
+            ps.Play();
+            var main = ps.main;
+            main.startColor = gradient;
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        particle.SetActive(false);
+    }
+
+    IEnumerator PlayDrumrollParticle()
+    {
+        GameObject particle = DrumrollParticlePool.SharedInstance.GetPooledParticle();
+        if(particle != null)
+        {
+            particle.SetActive(true);
+            ParticleSystem ps = particle.GetComponent<ParticleSystem>();
+            ps.Play();
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        particle.SetActive(false);
     }
 
     public void MissNote(Vector3 pos, int missNoteDamage)
     { 
-        Instantiate(missEffect, pos, Quaternion.identity);
+        Instantiate(missEffect, effectTransform);
         
         currentHealth -= missNoteDamage;
         Debug.Log("MISS");

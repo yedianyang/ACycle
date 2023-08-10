@@ -9,8 +9,8 @@ public class SingleNoteObject : MonoBehaviour
     public KeyCode keyInput;
     private bool keyPressed = false;
     public int missNoteDamage = 2;
+    public ParticleSystem.MinMaxGradient gradient;
 
-    public SpriteRenderer sprite, effect, shadow;
     void Update()
     {
         if(activated)
@@ -32,27 +32,23 @@ public class SingleNoteObject : MonoBehaviour
     {
         if(Input.GetKeyDown(keyInput))
         {
-            Vector3 effectPos = new Vector3(transform.position.x - 1f, transform.position.y + 1f, 0f);
             if(angle <= -8f)
             {
-                CycleConductor.instance.EarlyHit(effectPos);
+                CycleConductor.instance.EarlyHit(transform.position, gradient);
             }
             else if (angle > -8f && angle <= -3f)
             {
-                CycleConductor.instance.GreatHit(effectPos);
+                CycleConductor.instance.GreatHit(transform.position, gradient);
             }
             else if (angle > -3f && angle <= 3f)
             {
-                CycleConductor.instance.PerfectHit(effectPos);
+                CycleConductor.instance.PerfectHit(transform.position, gradient);
             }
             else if (angle > 3f)
             {
-                CycleConductor.instance.LateHit(effectPos);
+                CycleConductor.instance.LateHit(transform.position, gradient);
             }
             keyPressed = true;
-            effect.enabled = true;
-            sprite.enabled = false;
-            shadow.enabled = false;
             Destroy(gameObject);
         }
         else
@@ -64,7 +60,7 @@ public class SingleNoteObject : MonoBehaviour
     void MissNote()
     {
         activated = false;
-        CycleConductor.instance.MissNote(new Vector3(transform.position.x - 1f, transform.position.y + 1f, 0f), missNoteDamage);
+        CycleConductor.instance.MissNote(transform.position, missNoteDamage);
         Destroy(gameObject);
     }
 

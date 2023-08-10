@@ -49,12 +49,10 @@ public class CyclePlayer : MonoBehaviour
                     if(drumrollNoteObject.keyPressed)
                     {
                         drumrollLoopSound.UnPause();
-                        Debug.Log("playing");
                     }
                     else
                     {
                         drumrollLoopSound.Pause();
-                        Debug.Log("paused");
                     }
                 }
                 else if (drumrollLoopActivated)
@@ -95,13 +93,11 @@ public class CyclePlayer : MonoBehaviour
             drumrollLoopSound.Play();
             drumrollLoopActivated = true;
             
-            Debug.Log("activated drunmroll");
         }
     }
 
     void DeactivateDrumrollLoop()
     {
-        Debug.Log("deactivated drunmroll sound");
         drumrollLoopSound.Stop();
         if(drumrollNoteObject.keyPressed)
         {
@@ -115,6 +111,5 @@ public class CyclePlayer : MonoBehaviour
         drumrollEndPosition = -1f;
         drumrollActivated = false;
         drumrollNoteObject = null;
-        Debug.Log("deactivated drunmroll");
     }
 }
