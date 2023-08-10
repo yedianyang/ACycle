@@ -239,7 +239,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.46, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 332613957}
   - {fileID: 1674994958}
@@ -598,8 +598,8 @@ Camera:
   m_GameObject: {fileID: 619172816}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.5137255, g: 0.47058827, b: 0.36862746, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2101,6 +2101,14 @@ PrefabInstance:
       propertyPath: drumrollStartSound
       value: 
       objectReference: {fileID: 2096620691}
+    - target: {fileID: 1051289277741788270, guid: 8a6c1312e9d4445a192adce9cbd68081, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1051289277741788270, guid: 8a6c1312e9d4445a192adce9cbd68081, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a6c1312e9d4445a192adce9cbd68081, type: 3}
 --- !u!4 &943167227 stripped
@@ -2305,7 +2313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3fc2e844944f4830b6508c03053d836, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 3.5
   songBpm: 120
   firstBeatOffset: -0.01
   beatsShownInAdvance: 3
@@ -2317,6 +2324,7 @@ MonoBehaviour:
   donPrefab: {fileID: 3023745739558157380, guid: 51af86687fef3419c8cf6964e4e259b2, type: 3}
   kaPrefab: {fileID: 3023745739558157380, guid: 5a7952f2a89394db8b0786a04a37c607, type: 3}
   drumrollPrefab: {fileID: 2630727371437861114, guid: 88e5f113ce9754919b80c63fc632be92, type: 3}
+  radius: 3.5
   effectTransform: {fileID: 332075034}
   earlyEffect: {fileID: 7522030832353411186, guid: 90ea52e1b0bdf4b229fd48a9b7a14981, type: 3}
   greatEffect: {fileID: 4654017098817917571, guid: a28158ecd3adc4f0681015c957590815, type: 3}

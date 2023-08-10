@@ -22,7 +22,6 @@ public class CycleConductor : MonoBehaviour
 {
     public static CycleConductor instance { get; private set; }
 
-    public float radius = 4f;
     
     // Audio source things
     [SerializeField]
@@ -49,6 +48,7 @@ public class CycleConductor : MonoBehaviour
     public GameObject donPrefab;
     public GameObject kaPrefab;
     public GameObject drumrollPrefab;
+    public float radius = 4f;
 
     // Effects
     public Transform effectTransform;
@@ -86,6 +86,11 @@ public class CycleConductor : MonoBehaviour
         musicSource = GetComponent<AudioSource>();
         clipLength = musicSource.clip.length;
         secPerBeat = 60f / songBpm;
+
+        // Initializing notes data structure
+        nextIndex = 0;
+        ParseFile();
+        
         StartNewGame();
     }
 
@@ -111,10 +116,6 @@ public class CycleConductor : MonoBehaviour
         // Audio source things
         dspSongTime = (float)AudioSettings.dspTime;
         musicSource.Play();
-
-        // Initializing notes data structure
-        nextIndex = 0;
-        ParseFile();
 
         // Initializes player health
         currentHealth = maxHealth;

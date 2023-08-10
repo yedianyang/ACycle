@@ -38,6 +38,7 @@ public class CyclePlayer : MonoBehaviour
     {
         // Move player by 90 degrees every beat
         transform.parent.transform.eulerAngles = new Vector3(0f, 0f, -CycleConductor.instance.songPositionInBeats * 90f);
+        
         if(drumrollActivated && drumrollEndPosition > 0f)
         {
             if(CycleConductor.instance.songPositionInBeats < drumrollEndPosition)
