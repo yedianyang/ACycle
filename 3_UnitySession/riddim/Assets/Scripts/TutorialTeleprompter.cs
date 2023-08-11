@@ -6,6 +6,9 @@ using TMPro;
 public class TutorialTeleprompter : MonoBehaviour
 {
     public TextMeshProUGUI text;
+    public GameObject blue;
+    public GameObject green;
+    public GameObject yellow;
 
     void Start()
     {
@@ -23,14 +26,17 @@ public class TutorialTeleprompter : MonoBehaviour
             
             case 1:
                 text.text = "Hit green single notes with left arrow key";
+                green.SetActive(true);
                 break;
             
             case 4:
                 text.text = "Hit blue single notes with right arrow key";
+                blue.SetActive(true);
                 break;
             
             case 7:
                 text.text = "Hold left / right keys for long yellow notes";
+                yellow.SetActive(true);
                 break;
 
             case 10:
@@ -64,6 +70,9 @@ public class TutorialTeleprompter : MonoBehaviour
 
             default: 
                 text.text = "";
+                green.SetActive(false);
+                blue.SetActive(false);
+                yellow.SetActive(false);
                 break;
         }
     }

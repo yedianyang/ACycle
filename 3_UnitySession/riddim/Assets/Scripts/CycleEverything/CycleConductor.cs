@@ -116,7 +116,7 @@ public class CycleConductor : MonoBehaviour
                     popup.SetActive(true);
                     StopGame();
                 } 
-                else if (songPosition >= (clipLength - 5f))
+                else if (songPosition >= clipLength)
                 {
                     popupText.text = "Congrats. You survived the cubicle.";
                     popup.SetActive(true);
