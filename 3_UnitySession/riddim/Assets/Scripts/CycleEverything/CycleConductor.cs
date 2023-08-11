@@ -101,7 +101,7 @@ public class CycleConductor : MonoBehaviour
             songPosition = (float)(AudioSettings.dspTime - dspSongTime + firstBeatOffset);
             songPositionInBeats = songPosition / secPerBeat;
 
-            barNum.text = "Bar num: " + HelperLibrary.GetBarIndex(songPositionInBeats);
+            barNum.text = "Bar num: " + HelperLibrary.GetBarIndex(songPositionInBeats) + "    Beat position: " + HelperLibrary.GetBeatPositionInBar(songPositionInBeats);
             
             if(nextIndex < beats.Count && beats[nextIndex].beatPosition < (songPositionInBeats + beatsShownInAdvance))
             {
