@@ -36,45 +36,48 @@ public class CyclePlayer : MonoBehaviour
 
     void Update()
     {
-        // Move player by 90 degrees every beat
-        transform.parent.transform.eulerAngles = new Vector3(0f, 0f, -CycleConductor.instance.songPositionInBeats * 90f);
-        
-        if(drumrollActivated && drumrollEndPosition > 0f)
+        if(CycleConductor.instance.gameStarted)
         {
-            if(CycleConductor.instance.songPositionInBeats < drumrollEndPosition)
+            // Move player by 90 degrees every beat
+            transform.parent.transform.eulerAngles = new Vector3(0f, 0f, -CycleConductor.instance.songPositionInBeats * 90f);
+            
+            if(drumrollActivated && drumrollEndPosition > 0f)
             {
-                // Play sound
-                if(CycleConductor.instance.songPosition < (HelperLibrary.GetSongPositionInSeconds(drumrollEndPosition) - drumrollEndSound.clip.length * 0.5))
+                if(CycleConductor.instance.songPositionInBeats < drumrollEndPosition)
                 {
-                    if(drumrollNoteObject.keyPressed)
+                    // Play sound
+                    if(CycleConductor.instance.songPosition < (HelperLibrary.GetSongPositionInSeconds(drumrollEndPosition) - drumrollEndSound.clip.length * 0.5))
                     {
-                        drumrollLoopSound.UnPause();
+                        if(drumrollNoteObject.keyPressed)
+                        {
+                            drumrollLoopSound.UnPause();
+                        }
+                        else
+                        {
+                            drumrollLoopSound.Pause();
+                        }
                     }
-                    else
+                    else if (drumrollLoopActivated)
                     {
-                        drumrollLoopSound.Pause();
+                        DeactivateDrumrollLoop();
                     }
                 }
-                else if (drumrollLoopActivated)
+                else
                 {
-                    DeactivateDrumrollLoop();
+                    DeactivateDrumroll();
                 }
             }
             else
             {
-                DeactivateDrumroll();
-            }
-        }
-        else
-        {
-            if(Input.GetKeyDown(donHitKey))
-            {
-                donSound.Play();
-            }
+                if(Input.GetKeyDown(donHitKey))
+                {
+                    donSound.Play();
+                }
 
-            if(Input.GetKeyDown(kaHitKey))
-            {
-                kaSound.Play();
+                if(Input.GetKeyDown(kaHitKey))
+                {
+                    kaSound.Play();
+                }
             }
         }
     }

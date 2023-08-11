@@ -41,7 +41,7 @@ public class CycleConductor : MonoBehaviour
     public TextAsset file;
     List<Beat> beats;
     int nextIndex;
-    bool gameStarted = false;
+    public bool gameStarted = false;
 
     // Notes in scene
     public Transform notesContainer;
@@ -68,6 +68,7 @@ public class CycleConductor : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     // Debug
+    public GameObject popup;
     public TextMeshProUGUI barNum;
 
     void Awake()
@@ -88,7 +89,6 @@ public class CycleConductor : MonoBehaviour
         secPerBeat = 60f / songBpm;
 
         // Initializing notes data structure
-        nextIndex = 0;
         ParseFile();
         
         StartNewGame();
@@ -108,6 +108,12 @@ public class CycleConductor : MonoBehaviour
                 SpawnCycleBeat(beats[nextIndex]);
                 nextIndex++;
             }
+
+            if(currentHealth < 0)
+            {
+                popup.SetActive(true);
+                StopGame();
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.Escape))
@@ -121,6 +127,7 @@ public class CycleConductor : MonoBehaviour
         // Audio source things
         dspSongTime = (float)AudioSettings.dspTime;
         musicSource.Play();
+        nextIndex = 0;
 
         // Initializes player health
         currentHealth = maxHealth;
@@ -130,8 +137,23 @@ public class CycleConductor : MonoBehaviour
         // Init score
         currentScore = 0;
         scoreText.text = currentScore.ToString();
+
+        // Disable popup
+        popup.SetActive(false);
+
+        // Delete all existing notes
+        foreach(Transform child in notesContainer)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
+    public void StopGame()
+    {
+        musicSource.Stop();
+        gameStarted = false;
+    }
+    
     void SpawnCycleBeat(Beat beat)
     {
         GameObject cycleBeat = null;

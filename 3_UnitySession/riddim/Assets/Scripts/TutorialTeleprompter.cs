@@ -37,8 +37,20 @@ public class TutorialTeleprompter : MonoBehaviour
                 text.text = "That's it! Keep it up!";
                 break;
 
+            case 12:
+                text.text = "Your health drops if you miss a note";
+                break;
+            
+            case 14:
+                text.text = "Keep health above 0 to get to the end of the song";
+                break;
+                
             case 17:
                 text.text = "Speed it up!!";
+                break;
+            
+            case 25:
+                text.text = "Press ESC to leave tutorial anytime";
                 break;
 
             case 38:
