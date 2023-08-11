@@ -1981,7 +1981,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -176.4}
+  m_AnchoredPosition: {x: 0, y: -190}
   m_SizeDelta: {x: 640, y: 49.51}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1465648897
@@ -3077,6 +3077,7 @@ MonoBehaviour:
   songPosition: 0
   songPositionInBeats: 0
   file: {fileID: 4900000, guid: 62f591d1c26454a2382a13051f634eb6, type: 3}
+  gameStarted: 0
   notesContainer: {fileID: 651036450}
   donPrefab: {fileID: 3023745739558157380, guid: 7b727771b57ca4146b72f9a40610e80f, type: 3}
   kaPrefab: {fileID: 3023745739558157380, guid: a70b8d8a4e4874961bcc9f96136136bf, type: 3}
@@ -3095,7 +3096,9 @@ MonoBehaviour:
   scorePerGreatHit: 250
   scorePerPerfectHit: 500
   scoreText: {fileID: 2113840362}
-  barNum: {fileID: 1246698024}
+  popup: {fileID: 0}
+  popupText: {fileID: 0}
+  isTutorial: 1
 --- !u!1 &2004496106
 GameObject:
   m_ObjectHideFlags: 0

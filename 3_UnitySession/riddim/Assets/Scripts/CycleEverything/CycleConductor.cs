@@ -69,7 +69,8 @@ public class CycleConductor : MonoBehaviour
 
     // Debug
     public GameObject popup;
-    public TextMeshProUGUI barNum;
+    public TextMeshProUGUI popupText;
+    public bool isTutorial;
 
     void Awake()
     {
@@ -100,8 +101,6 @@ public class CycleConductor : MonoBehaviour
         {
             songPosition = (float)(AudioSettings.dspTime - dspSongTime + firstBeatOffset);
             songPositionInBeats = songPosition / secPerBeat;
-
-            barNum.text = "Bar num: " + HelperLibrary.GetBarIndex(songPositionInBeats) + "    Beat position: " + HelperLibrary.GetBeatPositionInBar(songPositionInBeats);
             
             if(nextIndex < beats.Count && beats[nextIndex].beatPosition < (songPositionInBeats + beatsShownInAdvance))
             {
@@ -109,10 +108,21 @@ public class CycleConductor : MonoBehaviour
                 nextIndex++;
             }
 
-            if(currentHealth < 0)
+            if(!isTutorial)
             {
-                popup.SetActive(true);
-                StopGame();
+                if(currentHealth < 0)
+                {
+                    popupText.text = "you failed as a salaryman!!!";
+                    popup.SetActive(true);
+                    StopGame();
+                } 
+                else if (songPosition >= (clipLength - 5f))
+                {
+                    popupText.text = "Congrats. You survived the cubicle.";
+                    popup.SetActive(true);
+                    StopGame();
+                }
+                
             }
         }
 
@@ -139,7 +149,10 @@ public class CycleConductor : MonoBehaviour
         scoreText.text = currentScore.ToString();
 
         // Disable popup
-        popup.SetActive(false);
+        if(!isTutorial)
+        {
+            popup.SetActive(false);
+        }
 
         // Delete all existing notes
         foreach(Transform child in notesContainer)
